@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import withAuth from '../HOC/withAuth';
 
 const profile = () => {
     return (
@@ -12,4 +13,4 @@ const profile = () => {
     )
 }
 
-export default profile
+export default withAuth(profile);

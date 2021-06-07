@@ -1,6 +1,7 @@
 import Head from 'next/head'
+import withAuth from '../HOC/withAuth';
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="">
       <Head>
@@ -10,3 +11,6 @@ export default function Home() {
     </div>
   )
 }
+
+export default withAuth(Home);
+
