@@ -1,7 +1,33 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Signin = () => {
+
+  const Router = useRouter();
+
+  const handleSignIn = async ({ username, password }) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "https://parseapi.back4app.com/login",
+        headers: {
+          "X-Parse-Application-Id": "1aKNPKlZZkL3gKe1avjN4bJzq1pkgAw7vj2aLRO3",
+          "X-Parse-REST-API-Key": "ibV2rrC1p90TfLxwUumNkKAzI7Rgk49bCj4ODnLV",
+        },
+        data: {
+          username,
+          password,
+        },
+      });
+      localStorage.setItem('sessionToken', response.data.sessionToken);
+      Router.replace("/");
+    } catch (e) {
+      console.log({ e });
+    }
+  };
+
   return (
     <div className="border border-black p-2 m-2">
         <div className="font-bold text-2xl m-2">Signin</div>
@@ -18,10 +44,7 @@ const Signin = () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          handleSignIn(values)
         }}
       >
         {({ isSubmitting }) => (
